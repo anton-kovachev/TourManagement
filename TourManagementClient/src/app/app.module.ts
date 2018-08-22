@@ -24,6 +24,8 @@ import { AddAcceptHeaderInterceptor } from './shared/add-accept-header-intercept
 import { ShowsComponent } from './tours/shows/shows.component';
 import { RedirectSilentRenewComponent } from './redirect-silent-renew/redirect-silent-renew.component';
 import { HandleHttpErrorInterceptor } from './shared/handle-http-error-interceptor';
+import { ErrorLoggerService } from './shared/error-logger.service';
+import { GlobalErrorHandler } from './shared/global-error-handler';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { HandleHttpErrorInterceptor } from './shared/handle-http-error-intercept
       multi: true },
     OpenIdConnectService,
     OpenIdConnectService,
-    RequireAuthenticatedUserGuardService],
+    RequireAuthenticatedUserGuardService,
+    ErrorLoggerService,
+    GlobalErrorHandler],
   bootstrap: [AppComponent]
 })
 export class AppModule {
