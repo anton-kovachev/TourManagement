@@ -1,0 +1,30 @@
+<div class="panel panel-heading" *ngIf="tour">
+  <div class="panel-primary">
+    Details for {{tour.title}} by {{tour.band}}
+  </div>
+
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-2">Description:</div>
+      <div class="col-md-10">{{tour.description}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Starts at:</div>
+      <div class="col-md-10">{{tour.startDate | date: 'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">Ends at:</div>
+      <div class="col-md-10">{{tour.endDate | date: 'dd/MM/yyyy'}}</div>
+    </div>
+    <div class="row" *ngIf="tour.estimatedProfits" style="margin-top:10px;">
+      <div class="col-md-2">Estimated Profits:</div>
+      <div class="col-md-10">{{tour.estimatedProfits}}</div>
+    </div>
+  </div>
+  <div>
+    <app-shows *ngIf="tour.shows && tour.shows.length" [shows]="tour.shows" ></app-shows>
+  </div>
+  <div class="panel-footer">
+    <a class="btn btn-default" [routerLink]="['/tours']">Back to Tours</a>
+  </div>
+</div>

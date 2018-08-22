@@ -1,0 +1,25 @@
+<div class="panel panel-heading">
+  <div class="panel-primary">
+    Tour Shows
+  </div>
+
+  <div class="panel-body">
+
+    <table *ngIf="shows && shows.length">
+        <thead>
+          <td>Date</td>
+          <td>Venue</td>
+          <td>City</td>
+          <td>Country</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let show of shows" >
+            <td>{{show.date | date: 'dd/MM/yyyy'}}</td>
+            <td>{{show.venue}}</td>
+            <td>{{show.city}}</td>
+            <td>{{show.country}}</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="panel panel-primary">
+  <div class="panel-heading"> 
+    <span *ngIf="isAdmin">All Tours</span>
+    <span *ngIf="!isAdmin">Your Tours</span>
+  </div>
+
+  <a class="btn btn-primary" style="width:100px; margin-left: 10px; margin-top: 10px; margin-bottom: 10px;" [routerLink]="['/tour-add']">
+    Add A Tour
+  </a>
+
+  <div class="panel-body">
+
+    <div class="row">
+      <div class="col-md-4 margin-bottom-10">
+        <input type="text" [(ngModel)]="filterBy" placeholder="Search by Band" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table" *ngIf="filteredTours && filteredTours.length">
+          <thead>
+            <tr>
+              <th>Band</th>
+              <th>Title</th>
+              <th>Starts on</th>
+              <th>Ends on</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tour of filteredTours">
+              <td>{{tour.band}}</td>
+              <td>
+                <a [routerLink]="['/tours', tour.tourId]">
+                  {{tour.title}}
+                </a>
+              </td>
+              <td>{{tour.startDate | date: 'dd/MM/yyyy'}}</td>
+              <td>{{tour.endDate | date: 'dd/MM/yyyy'}}</td>
+              <td *ngIf="tour.isUserTourManager">
+                <a [routerLink]="['/tour-update', tour.tourId]">
+                  Edit
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>

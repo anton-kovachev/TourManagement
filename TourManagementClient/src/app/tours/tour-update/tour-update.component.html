@@ -1,0 +1,90 @@
+<div class="panel panel-primary">
+  <div class="panel-heading" *ngIf="tour">
+    Edit form for <b>{{tour.band}}</b>
+  </div>
+
+  <div class="panel-body" *ngIf="tour">
+    <form class="form-horizontal" novalidate (ngSubmit)="saveTour()" [formGroup]="tourForm">
+      <fieldset>
+        <div class="form-group" [ngClass]="{'has-error': title.invalid && title.touched}" >
+          <label class="col-md-2" for="titleId">Title</label>
+          <div class="col-md-10" >
+            <input class="form-control" id="titleId" type="text" placeholder="Title" formControlName="title" />
+            <div *ngIf="title.touched" class="has-error" >
+              <div *ngIf="title.errors?.required">Tour title is required!</div>
+              <div *ngIf="title.errors?.maxlength">Tour title is too long!</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isAdmin" class="form-group">
+          <label class="col-md-2" for="manager">Manager:</label>
+          <div class="col-md-8">
+            <select class="form-control" id="manager" formControlName="manager" >
+              <option *ngFor="let manager of managers" [ngValue]="manager.managerId">{{manager.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': description.invalid && description.touched}" >
+          <label class="col-md-2" for="descriptionId">Description</label>
+          <div class="col-md-10" >
+            <input class="form-control" id="descriptionId" type="text" placeholder="Description" formControlName="description" />
+            <div *ngIf="description.touched" class="has-error">
+              <div *ngIf="description.errors?.required">Tour description is required!</div>
+              <div *ngIf="description.errors?.maxlength">Tour description is too long!</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isAdmin" class="form-group" [ngClass]="{'has-error': estimatedProfits.invalid && estimatedProfits.touched}" >
+          <label class="col-md-2" for="estimatedProfitsId">Estimated Profits</label>
+          <div class="col-md-8">
+            <input type="number" id="estimatedProfitsId" placeholder="Estimated Profits"  formControlName="estimatedProfits" />
+            <div *ngIf="estimatedProfits.touched">
+              <div *ngIf="estimatedProfits.errors?.required">Tour estimated profits are required!</div>
+              <div *ngIf="estimatedProfits.errors?.max">Tour estimated profits must be lower!</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': startDate.invalid && startDate.touched}">
+          <label class="col-md-2" for="startDateId">Starts at</label>
+          <div class="col-md-10" >
+            <input class="form-control" id="startDateId" type="date" placeholder="Start Date" formControlName="startDate" />
+            <div *ngIf="startDate.touched" class="has-error" >
+              <div *ngIf="startDate.errors?.required">Tour start date is required!</div>
+              <div *ngIf="tourForm.errors?.startDateBeforeEndDate">Tour start date must be before enda date!</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [ngClass]="{'has-error': endDate.invalid && endDate.touched}">
+          <label class="col-md-2" for="endDateId">Ends at</label>
+          <div class="col-md-10" >
+            <input class="form-control" id="endDateId" type="date" placeholder="End Date" formControlName="endDate" />
+            <div *ngIf="endDate.touched">
+              <div *ngIf="endDate.errors?.required">Tour end date is required!</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <b>Tour Shows</b>
+        </div>
+        <div class="form-group">
+        <div *ngIf="shows.invalid">
+          <div *ngIf="shows.errors?.showDateInTourRange">A show is outside the tour's time span!</div>
+        </div>
+         <div *ngFor="let show of tourForm.get('shows').controls; let i = index;" formArrayName="shows" >
+            <app-show-single [show]="show" [showIndex]="i" (removeShowClicked)="tourForm.get('shows').removeAt($event)"></app-show-single>
+          </div>
+          
+          <div class="row col-md-2">
+            <button class="button button-primary" (click)="addShow()"> Add Show </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-2 col-md-offset-2">
+            <span><button class="btn btn-primary" type="submit" [disabled]="!tourForm.valid" >Save</button></span>
+            <span><a class="button button-default" [routerLink]="['/tours']">Back</a></span>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

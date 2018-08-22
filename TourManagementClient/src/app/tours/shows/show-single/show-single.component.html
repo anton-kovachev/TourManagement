@@ -1,0 +1,53 @@
+<div [formGroup]="show"  >
+  <div class="form-group" [ngClass]="{'has-error': date.invalid && date.touched}" >
+    <label [attr.for]="'dateId'+showIndex" class="col-md-2 control-label">Date:</label>
+    <div class="col-md-8">
+      <input class="form-control" type="date" [attr.id]="'dateId'+showIndex" formControlName="date"/>
+      <div *ngIf="date.touched" class="col-md-8 has-error">
+        <div *ngIf="date.errors?.required"> The date of the show is required!</div>
+        <div *ngIf="show.errors?.showDateInTourTimeframe"> The show's date is outside the tour's start and end date! </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label [attr.for]="'venueId'+showIndex" class="col-md-2 control-label">Venue:</label>
+    <div class="col-md-8">
+      <input class="form-control" type="text" [attr.id]="'venueId'+showIndex" formControlName="venue"/>
+    </div>
+    <div *ngIf="venue.touched || venue.dirty" class="col-md-8 has-error">
+      <div *ngIf="venue.errors?.required">Show Venue is required!</div>
+    </div>
+  </div>
+  <div class="form-group" [ngClass]="{'has-error': city.invalid && city.touched}">
+    <label [attr.for]="'cityId'+showIndex" class="col-md-2 control-label">City:</label>
+    <div class="col-md-8">
+      <input class="form-control" type="text" [attr.id]="'cityId'+showIndex" formControlName="city"/>
+    </div>
+    <div *ngIf="city.touched" class="col-md-8 has-error">
+      <div *ngIf="city.errors?.required">City is required!</div>
+    </div>
+  </div>   
+  <div class="form-group" [ngClass]="{'has-error': country.invalid && country.required}">
+    <label [attr.for]="'countryId'+showIndex" class="col-md-2 control-label">Country:</label>
+    <div class="col-md-10">
+      <input class="form-control" type="text" [attr.id]="'countryId'+showIndex" formControlName="country" />
+    </div>
+    <div *ngIf="country.touched" class="col-md-8 has-error">
+      <div *ngIf="country.errors?.required">Tour Country is requred!</div>
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-md-10">
+      <button class="btn btn-danger pull-right" (click)="removeShow()">Remove show</button>
+    </div>
+  </div>
+ <!-- <div class="form-group">
+    <div class="col-md-10">
+      <button class="btn btn-danger pull-right" (click)="testShow()">
+      Remove show
+      </button>
+    </div>
+  </div> -->
+</div>
